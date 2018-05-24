@@ -40,9 +40,9 @@
               </div>
             </div>
             <input type="hidden" name="remember_token" value="{{Session::token()}}">
-            <div class="form-group row my-4">
-              <div class="col-md-12 col-lg-12 offset-lg-2 col-auto mr-auto">
-                <button type="submit" class="btn btn-primary mr-lg-4">
+            <div class="form-group row my-4 justify-content-center">
+              <div class="col-md-12 col-lg-12 offset-lg-2 col-auto">
+                <button type="submit" class="btn btn-primary mr-lg-4 ">
                   Register
                 </button>
                 <a class="black-text cambiar">
@@ -59,29 +59,31 @@
             @csrf
             <div class="row">
               <div class="col-md-10 col-lg-6">
-                <div class="md-form">
-                  <input type="text" id="email" name="email" class="form-control">
-                  <label for="email">Email</label>
+                <div class="md-form ">
+                  <input type="text" id="email_login" name="email_login" class="form-control">
+                  <label for="email_login">Email o Nombre de Usuario</label>
                 </div>
               </div>
               <div class="col-md-10 col-lg-6">
                 <div class="md-form">
-                  <input type="password" id="password" name="password" class="form-control">
-                  <label for="password">Contraseña</label>
+                  <input type="password" id="password_login" name="password_login" class="form-control">
+                  <label for="password_login">Contraseña</label>
                 </div>
               </div>
             </div>
             <div class="form-group row my-4">
-              <div class="col-md-12 col-lg-12"> 
-                <button type="submit" class="btn btn-primary">
-                    Login
+              <div class="col-md-12 col-lg-12">
+                <button type="submit" class="btn btn-primary mr-lg-4">
+                  Login
                 </button>
-                <a class="cambiar black-text ">
-                    !Registraté!
-                  </a>
-                  <a class="black-text" href="{{ route('password.request') }}">
-                      ¿Olvidaste la contraseña?
-                    </a>
+                <div class="row">
+                <a class="cambiar black-text mr-lg-4">
+                  ¡Regístrate!
+                </a>
+                <a class="black-text" href="{{ route('password.request') }}">
+                  ¿Olvidaste la contraseña?
+                </a>
+              </div>
             </div>
             </div>
             <input type="hidden" name="remember_token" value="{{Session::token()}}">
