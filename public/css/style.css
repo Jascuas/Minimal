@@ -12,7 +12,7 @@ h6 {
 
 .mdb-feed .news .label {
   display: block;
-  -webkit-box-flex: 0;
+  box-flex: 0;
   -webkit-flex: 0 0 auto;
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
@@ -29,7 +29,7 @@ h6 {
 
 .mdb-feed .news .excerpt {
   display: block;
-  -webkit-box-flex: 1;
+  box-flex: 1;
   -webkit-flex: 1 1 auto;
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
