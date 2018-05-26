@@ -6,34 +6,34 @@
     <div class="row">
       <!--Grid column-->
       <div class="col-md-6 white-text text-center text-md-left mt-xl-5 mtb-5 wow fadeInLeft" data-wow-delay="0.3s">
-          @include('includes.message-block')
+        @include('includes.message-block')
         <div id="registro">
           <h1 class="h1-responsive font-weight-bold mt-sm-5">Registrate en nuestra web</h1>
           <hr class="hr-light">
           <form method="POST" action="{{ route('register') }}">
             @csrf
-            <div class="row">
-              <div class="col-md-10 col-lg-6">
+            <div class="row justify-content-start">
+              <div class="col-md-11 col-lg-6">
                 <div class="md-form">
                   <input type="text" id="name" name="name" class="form-control">
                   <label for="name">Nombre</label>
                 </div>
               </div>
 
-              <div class="col-md-10 col-lg-6">
+              <div class="col-md-11 col-lg-6">
                 <div class="md-form">
                   <input type="text" id="email" name="email" class="form-control">
                   <label for="email">Email</label>
                 </div>
               </div>
-              <div class="col-md-10 col-lg-6">
+              <div class="col-md-11 col-lg-6">
                 <div class="md-form">
                   <input type="password" id="password" name="password" class="form-control">
                   <label for="password">Contraseña</label>
                 </div>
               </div>
 
-              <div class="col-md-10 col-lg-6">
+              <div class="col-md-11 col-lg-6">
                 <div class="md-form">
                   <input type="password" id="password_confirmation" name="password_confirmation" class="form-control">
                   <label for="password_confirmation">Confirma la contraseña</label>
@@ -46,7 +46,7 @@
                 <button type="submit" class="btn btn-primary mr-lg-4 ">
                   Register
                 </button>
-                <a class="black-text cambiar">
+                <a class="black-text cambiar small">
                   ¿Ya tienes cuenta?
                 </a>
               </div>
@@ -59,33 +59,35 @@
           <form method="POST" action="{{ route('login') }}">
             @csrf
             <div class="row">
-              <div class="col-md-10 col-lg-6">
+              <div class="col-md-11 col-lg-6">
                 <div class="md-form ">
                   <input type="text" id="email_login" name="email_login" class="form-control" value="{{ old('email') }}">
                   <label for="email_login">Email o Nombre de Usuario</label>
                 </div>
               </div>
-              <div class="col-md-10 col-lg-6">
+              <div class="col-md-11 col-lg-6">
                 <div class="md-form">
                   <input type="password" id="password_login" name="password_login" class="form-control">
                   <label for="password_login">Contraseña</label>
                 </div>
               </div>
             </div>
-            <div class="form-group row my-4">
-              <div class="col-md-12 col-lg-12">
-                <button type="submit" class="btn btn-primary mr-lg-4">
+            <div class=" row py-4 justify-content-start ">
+              <div class="col-5 col-xl-3 col-lg-4 col-md-5">
+                <button type="submit" class="btn btn-primary ">
                   Login
                 </button>
-                <div class="row">
-                <a class="cambiar black-text mr-lg-4">
+              </div>
+              <div class="col-3 col-xl-2 col-lg-3 col-md-3 align-self-center">
+                <a class="cambiar black-text small">
                   ¡Regístrate!
                 </a>
-                <a class="black-text" href="{{ route('password.request') }}">
+              </div>
+              <div class="col-4 col-xl-4 col-lg-5 col-md-4 align-self-center pr-0">
+                <a class="black-text small" href="{{ route('password.request') }}">
                   ¿Olvidaste la contraseña?
                 </a>
               </div>
-            </div>
             </div>
             <input type="hidden" name="remember_token" value="{{Session::token()}}">
           </form>

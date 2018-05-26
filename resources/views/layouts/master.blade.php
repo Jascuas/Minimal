@@ -20,7 +20,7 @@
   <!-- Required for full background image -->
 
   <link rel="stylesheet" type="text/css" href="{{ URL::to('css/style.css') }}"></link>
-
+  
   @if(isset($welcome))
   <style>
     body {
