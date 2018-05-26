@@ -6,6 +6,7 @@
     <div class="row">
       <!--Grid column-->
       <div class="col-md-6 white-text text-center text-md-left mt-xl-5 mtb-5 wow fadeInLeft" data-wow-delay="0.3s">
+          @include('includes.message-block')
         <div id="registro">
           <h1 class="h1-responsive font-weight-bold mt-sm-5">Registrate en nuestra web</h1>
           <hr class="hr-light">
@@ -34,8 +35,8 @@
 
               <div class="col-md-10 col-lg-6">
                 <div class="md-form">
-                  <input type="password" id="password-confirm" name="password-confirm" class="form-control">
-                  <label for="password-confirm">Confirma la contraseña</label>
+                  <input type="password" id="password_confirmation" name="password_confirmation" class="form-control">
+                  <label for="password_confirmation">Confirma la contraseña</label>
                 </div>
               </div>
             </div>
@@ -60,7 +61,7 @@
             <div class="row">
               <div class="col-md-10 col-lg-6">
                 <div class="md-form ">
-                  <input type="text" id="email_login" name="email_login" class="form-control">
+                  <input type="text" id="email_login" name="email_login" class="form-control" value="{{ old('email') }}">
                   <label for="email_login">Email o Nombre de Usuario</label>
                 </div>
               </div>

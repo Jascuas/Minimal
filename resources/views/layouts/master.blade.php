@@ -46,7 +46,7 @@ footer .container a:hover ~ .linea{
 <body>
   @include('includes.header')
   <div class="container py-5" style="margin-top:30px">
-    @include('includes.message-block') @yield('content')
+     @yield('content')
   </div>
   @include('includes.footer')
   <!-- JQuery -->

@@ -86,4 +86,37 @@
         <img src="{{ route('account.image', ['filename' => $user->name . '-' . $user->id . '.jpg']) }}" alt="" class="img-responsive">
     </div>
 </section>
-@endif --}} @endsection
+@endif --}}
+
+<section>
+
+    <div class="jumbotron author-box px-5 py-4 text-center text-md-left wow fadeIn" data-wow-delay="0.3s" style="visibility: visible; animation-name: fadeIn; animation-delay: 0.3s;">
+        <!--Name-->
+        <h4 class="font-weight-bold h4 text-center">About author</h4>
+        <hr>
+        <div class="row">
+            <!--Avatar-->
+            <div class="col-12 col-sm-2">
+                <img src="http://mdbootstrap.com/img/Photos/Avatars/img%20(32).jpg" class="img-fluid rounded-circle z-depth-2">
+            </div>
+            <!--Author Data-->
+            <div class=" col-12 col-sm-10 text-left">
+                <p><strong>John Doe</strong></p>
+                <div class="personal-sm pb-3">
+                    <a class="pr-2 fb-ic"><i class="fa fa-facebook"> </i></a>
+                    <a class="pr-2 tw-ic"><i class="fa fa-twitter"> </i></a>
+                    <a class="pr-2 gplus-ic"><i class="fa fa-google-plus"> </i></a>
+                    <a class="pr-2 li-ic"><i class="fa fa-linkedin"> </i></a>
+                </div>
+                <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.</p>
+                <p class="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint esse nulla quia quam veniam commodi dicta, iusto inventore. Voluptatum pariatur eveniet ea, officiis vitae praesentium beatae quas libero, esse facere.
+                </p>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+@endsection
