@@ -39,12 +39,14 @@ class RegisterController extends Controller
         ]);
         try {
             $validatedData['password']        = bcrypt(array_get($validatedData, 'password'));
-            $validatedData['activation_code'] = str_random(30).time();
+            $validatedData['activation_code'] = time();
             $validatedData['username'] = $request->email;
             $user                             = app(User::class)->create($validatedData);
         } catch (\Exception $exception) {
             logger()->error($exception);
-            return redirect()->back()->with('message', 'No se ha podido crear el usuario.');
+            return redirect()->back()->withErrors([
+                'error' => 'No se ha podido crear el usuario.',
+            ]);           
         }
         $user->notify(new UserRegisteredSuccessfully($user));
         return redirect()->back()->with('message', 'Usuario creado correctamente. Comprueba tu correo electronico para activar tu cuenta.(Puede estar en la bandeja de spam)');

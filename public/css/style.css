@@ -194,7 +194,7 @@ footer .container div:hover ~ .linea{
 
 @keyframes autofill {
   to {
-      color: #fff;
+      color: rgb(2, 0, 0);
       background: transparent;
   }
 }

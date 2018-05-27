@@ -1,7 +1,10 @@
+//  Animations initialization 
+new WOW().init();
+
 var postId = 0;
 var postBodyElement = null;
 var welcome = false;
-// var login = false;
+
 
 
 $('.edit').on('click', function (event) {
@@ -66,3 +69,21 @@ $('.like').on('click', function (event) {
 
 $('.cambiar').on('click', cambiar);
 
+
+$('input, label').addClass('text-white');     
+$('.modal-color').toggleClass('text-white');
+
+$.urlParam = function(name){
+  var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+  if (results==null){
+     return null;
+  }
+  else{
+     return decodeURI(results[1]) || 0;
+  }
+}
+if($.urlParam('modal_password')){
+  $('#resetpassword').modal('show');
+  $('#password_token').val($.urlParam('token'));
+
+}

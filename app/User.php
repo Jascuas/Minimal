@@ -35,4 +35,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Like');
     }
+
+    public function sendPasswordResetNotification($token)
+{
+    $this->notify(new Notifications\MailResetPasswordNotification($token));
+}
 }
