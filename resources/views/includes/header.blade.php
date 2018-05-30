@@ -20,17 +20,17 @@
             <a class="nav-link" href="{{ route('account') }}" >
                 <div class="label">
                   @if(is_null(Auth::user()->avatar)) 
-                  <img src="/storage/default_avatar.gif" alt="Perfil" class="rounded-circle img-fluid">
+                  <img src="/storage/default_avatar.gif" alt="Perfil" class="rounded-circle img-fluid" style="width:40px">
                   @else 
-                  <img src="/storage/{{Auth::user()->id . '/' . 'User-Image.jpg' }}" alt="Perfil" class="rounded-circle z-depth-1" style="width:45px">
+                  <img src="/storage/{{Auth::user()->id . '/' . 'User-Image.jpg' }}" alt="Perfil" class="rounded-circle z-depth-1" style="width:40px">
                   @endif  
                     {{-- <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1-mini.jpg" class="rounded-circle z-depth-1-half"> --}}
                 </div>
             </a>
           </li>
-          <li class="nav-item fa-lg ">
+          <li class="nav-item fa-lg d-flex align-items-center ">
             <!-- Basic dropdown -->
-            <span class="nav-link">
+            <span class="nav-link ">
               <a data-toggle="modal" data-target="#notifications-modal">
                 <span class="fa-layers fa-fw mr-1">
                     <i class="far fa-bell "></i>
@@ -39,7 +39,7 @@
               </a>
             </span>
           </li>
-          <li class="nav-item">
+          <li class="nav-item d-flex align-items-center">
             <a class="nav-link" href="{{ route('logout') }}">
               <i class="fas fa-sign-out-alt"></i>
             </a>

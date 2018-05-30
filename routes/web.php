@@ -10,7 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::post('/register', [ 
+    'uses' => 'Auth\RegisterController@register',
+    'as' => 'register'
+]);
 Auth::routes();
 
 Route::get('/welcome', function () {
@@ -21,11 +24,12 @@ Route::get('/login', function () {
     return redirect()->to('/welcome');
 })->name('login');
 
-Route::get('/register', function () {
-    return redirect()->to('/welcome');
-})->name('register');
 
 
+Route::post('/like', [ 
+    'uses' => 'PostController@postLikePost',
+    'as' => 'like'
+]);
 
 Route::get('/', [
     'uses' => 'HomeController@index',

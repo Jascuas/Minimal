@@ -20,7 +20,7 @@
   <!-- Required for full background image -->
 
   <link rel="stylesheet" type="text/css" href="{{ URL::to('css/style.css') }}"></link>
-  
+
   @if(isset($welcome))
   <style>
     body {
@@ -28,14 +28,18 @@
       background: -webkit-linear-gradient(45deg, rgba(213, 15, 61, 0.6), rgba(13, 17, 198, 0.69) 100%);
       background: linear-gradient(to 45deg, rgba(213, 15, 61, 0.6), rgba(13, 17, 198, 0.69) 100%);
     }
-    .linea{
-  width:0;
-  border-top:1px solid #fff;
-  -webkit-transition:   width 2s;
-  transition:  width 0.3s ease-in;
-}
-footer .container a:hover ~ .linea{
-  width: 30%;
+    
+    .linea {
+      width: 0;
+      border-top: 1px solid #fff;
+      -webkit-transition: width 2s;
+      transition: width 0.3s ease-in;
+    }
+
+    footer .container a:hover~.linea {
+      width: 30%;
+    }
+  
 }
   </style>
   @else {{--
@@ -45,8 +49,8 @@ footer .container a:hover ~ .linea{
 
 <body>
   @include('includes.header')
-  <div class="container py-5" style="margin-top:30px">
-     @yield('content')
+  <div class="container py-3 pb-5 mb-5 medio">
+    @yield('content')
   </div>
   @include('includes.footer')
   <!-- JQuery -->
@@ -64,6 +68,8 @@ footer .container a:hover ~ .linea{
 
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe"
     crossorigin="anonymous"></script>
+
+
 </body>
 
 </html>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use \Illuminate\Routing\ResponseFactory;
 class RegisterController extends Controller
 {
     use RegistersUsers;
@@ -31,26 +32,73 @@ class RegisterController extends Controller
      */
     protected function register(Request $request)
     {
-        /** @var User $user */
-        $validatedData = $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+        header('Content-Type: application/json');
+        $rules = [
+            'name'     => 'required|string|max:50',
+            'email'    => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required',
+        ];
+        $messages = [
+            'name.required' => 'El nombre es requerido.',
+            'name.max' =>'El nombre no puede superar 50 caracteres.',
+            'name.string' =>'El nombre no puede contener caracteres especiales.',
+            'email.required' => 'El email es requerido.',
+            'email.max' =>'El email no puede superar 50 caracteres.',
+            'email.email' =>'El email no tiene un formato valido.',
+            'email.unique' =>'El email ya esta siendo usado en nuestra base de datos.',
+            'password.required' => 'La contraseña es requerida.',
+            'password.min' =>'La contraseña no puede ser menor de 6 caracteres.',
+            'password_confirmation.required' =>'Confirmar la  contraseña es requerido.',
+            'confirmed' =>'Las contraseñas no coinciden.',
+        ];
+        $validatedData = \Validator::make($request->all(),$rules, $messages);
+
+        if ($validatedData->fails())
+            return response()->json(['errors'=>$validatedData->errors()]);
         try {
-            $validatedData['password']        = bcrypt(array_get($validatedData, 'password'));
-            $validatedData['activation_code'] = time();
-            $validatedData['username'] = $request->email;
-            $user                             = app(User::class)->create($validatedData);
+            $Datos = $_POST;
+            $Datos['password']        = bcrypt($Datos['password']);
+            // $Datos['password']        = bcrypt(array_get($Datos, 'password'));
+            $Datos['activation_code'] = time();
+            $Datos['username']        = $Datos['email'];
+            $user                     = app(User::class)->create($Datos);
+            if(!$user->notify(new UserRegisteredSuccessfully($user))){
+                $user->delete();
+                return response()->json(['error'=>'No se ha podido crear el usuario.']); 
+            }
         } catch (\Exception $exception) {
             logger()->error($exception);
-            return redirect()->back()->withErrors([
-                'error' => 'No se ha podido crear el usuario.',
-            ]);           
-        }
-        $user->notify(new UserRegisteredSuccessfully($user));
-        return redirect()->back()->with('message', 'Usuario creado correctamente. Comprueba tu correo electronico para activar tu cuenta.(Puede estar en la bandeja de spam)');
+            $user->delete();
+            return response()->json(['error'=>'No se ha podido crear el usuario.']);          
+        }        
+        return response()->json(['success']);
     }
+    // protected function register1(Request $request)
+    // {
+    //     /** @var User $user */
+    // @info($request);
+    // @info($_POST);
+    // exit();    
+    //     $validatedData = $request->validate([
+    //         'name'     => 'required|string|max:255',
+    //         'email'    => 'required|string|email|max:255|unique:users',
+    //         'password' => 'required|string|min:6|confirmed',
+    //     ]);
+    //     try {
+    //         $validatedData['password']        = bcrypt(array_get($validatedData, 'password'));
+    //         $validatedData['activation_code'] = time();
+    //         $validatedData['username'] = $request->email;
+    //         $user                             = app(User::class)->create($validatedData);
+    //     } catch (\Exception $exception) {
+    //         logger()->error($exception);
+    //         return redirect()->back()->withErrors([
+    //             'error' => 'No se ha podido crear el usuario.',
+    //         ]);           
+    //     }
+    //     $user->notify(new UserRegisteredSuccessfully($user));
+    //     return redirect()->back()->with('message', 'Usuario creado correctamente. Comprueba tu correo electronico para activar tu cuenta.(Puede estar en la bandeja de spam)');
+    // }
     /**
      * Activate the user with given activation code.
      * @param string $activationCode

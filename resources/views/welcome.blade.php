@@ -5,46 +5,47 @@
     <!--Grid row-->
     <div class="row">
       <!--Grid column-->
-      <div class="col-md-6 white-text text-center text-md-left mt-xl-5 mtb-5 wow fadeInLeft" data-wow-delay="0.3s">
-        @include('includes.message-block')
+      <div id="fadeleft" class="col-md-6 white-text text-center text-md-left mt-xl-5 mtb-5 wow fadeInLeft" data-wow-delay="0.3s">
+        <blockquote class="blockquote d-none" id="alertas">
+            
+        </blockquote>
         <div id="registro">
           <h1 class="h1-responsive font-weight-bold mt-sm-5">Registrate en nuestra web</h1>
           <hr class="hr-light">
-          <form method="POST" action="{{ route('register') }}">
+          <form method="POST" id="register-form">
             @csrf
             <div class="row justify-content-start">
               <div class="col-md-11 col-lg-6">
                 <div class="md-form">
-                  <input type="text" id="name" name="name" class="form-control">
-                  <label for="name">Nombre</label>
+                  <input type="text" id="name" name="name" class="form-control validate" required>
+                  <label for="name" >Nombre</label>
                 </div>
               </div>
 
               <div class="col-md-11 col-lg-6">
                 <div class="md-form">
-                  <input type="text" id="email" name="email" class="form-control">
+                  <input type="email" id="email" name="email" class="form-control validate" required >
                   <label for="email">Email</label>
                 </div>
               </div>
               <div class="col-md-11 col-lg-6">
                 <div class="md-form">
-                  <input type="password" id="password" name="password" class="form-control">
+                  <input type="password" id="password" name="password" class="form-control validate" required>
                   <label for="password">Contraseña</label>
                 </div>
               </div>
 
               <div class="col-md-11 col-lg-6">
                 <div class="md-form">
-                  <input type="password" id="password_confirmation" name="password_confirmation" class="form-control">
+                  <input type="password" id="password_confirmation" name="password_confirmation" class="form-control validate" required>
                   <label for="password_confirmation">Confirma la contraseña</label>
                 </div>
               </div>
             </div>
-            <input type="hidden" name="remember_token" value="{{Session::token()}}">
             <div class="form-group row my-4 justify-content-center">
               <div class="col-md-12 col-lg-12 offset-lg-2 col-auto">
-                <button type="submit" class="btn btn-primary mr-lg-4 ">
-                  Register
+                <button   class="btn btn-primary mr-lg-4 " id="btn-register">
+                  Register &nbsp; <i class="far fa-share-square" id="Iregistro"></i>
                 </button>
                 <a class="black-text cambiar small">
                   ¿Ya tienes cuenta?
@@ -99,7 +100,7 @@
       </div>
       <!--Grid column-->
       <!--Grid column-->
-      <div class="col-md-6 col-xl-5 mt-xl-5 wow fadeInRight d-flex align-items-center" data-wow-delay="0.3s">
+      <div id="faderight" class="col-md-6 col-xl-5 mt-xl-5 wow fadeInLeft " data-wow-delay="0.5s">
         <img src="https://mdbootstrap.com/img/Mockups/Transparent/Small/admin-new.png" alt="" class="img-fluid">
       </div>
       <!--Grid column-->
@@ -177,4 +178,9 @@
     </div>
   </div>
 </div>
+<script>
+    var token = '{{Session::token()}}';
+    var urlRegister = '{{route('register')}}';
+    var urlLike = '{{route('like')}}';
+</script>
 @endsection
