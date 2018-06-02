@@ -16,9 +16,10 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
     crossorigin="anonymous">
   <!-- Material Design Bootstrap -->
+  <link rel="stylesheet" type="text/css" href="{{ URL::to('css/mdb.min.css') }}"></link>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.2/css/mdb.min.css" />
+  
   <!-- Required for full background image -->
-
   <link rel="stylesheet" type="text/css" href="{{ URL::to('css/style.css') }}"></link>
 
   @if(isset($welcome))
@@ -53,6 +54,8 @@
     @yield('content')
   </div>
   @include('includes.footer')
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe"
+    crossorigin="anonymous"></script>
   <!-- JQuery -->
   <script type="text/javascript" src="{{ URL::to('js/jquery-3.2.1.min.js') }}"></script>
   <!-- Bootstrap tooltips -->
@@ -61,13 +64,13 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
     crossorigin="anonymous"></script>
   <!-- MDB core JavaScript -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.2/js/mdb.min.js"></script>
+  {{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.2/js/mdb.min.js"></script> --}}
+  <script type="text/javascript" src="{{ URL::to('js/mdb.min.js') }}"></script>
   <!-- App core JavaScript -->
   <script type="text/javascript" src="{{ URL::to('js/prueba.js') }}"></script>
 
 
-  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe"
-    crossorigin="anonymous"></script>
+
 
 
 </body>

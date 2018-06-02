@@ -20,7 +20,8 @@
             <a class="nav-link" href="{{ route('account') }}" >
                 <div class="label">
                   @if(is_null(Auth::user()->avatar)) 
-                  <img src="/storage/default_avatar.gif" alt="Perfil" class="rounded-circle img-fluid" style="width:40px">
+                  {{-- <img src="/storage/default_avatar.gif" alt="Perfil" class="rounded-circle img-fluid" style="width:40px"> --}}
+                  <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(17)-mini.jpg" style="width:40px" class="rounded-circle avatar-img z-depth-1-half">
                   @else 
                   <img src="/storage/{{Auth::user()->id . '/' . 'User-Image.jpg' }}" alt="Perfil" class="rounded-circle z-depth-1" style="width:40px">
                   @endif  
