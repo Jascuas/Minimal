@@ -1,6 +1,6 @@
 <!--Footer-->
 
-<footer class="pt-4 font-small @if(isset($welcome)) page-footer @endif" style="border-top: 1px solid rgba(0, 0, 0, .1);">
+<footer class="pt-4 mt-5 font-small @if(isset($welcome)) page-footer @endif" style="border-top: 1px solid rgba(0, 0, 0, .1);">
     
     <!--Footer Links-->
     <div class="container  mb-2 text-center text-md-center">

@@ -21,7 +21,7 @@
                 </div>
 
                 <!-- Card image-->
-                <img class="card-img-top mx-auto" style="max-width:80%" src="https://scontent-vie1-1.cdninstagram.com/vp/8084b0cdf8213d6501d873e2c87496cd/5BBB99AF/t51.2885-15/sh0.08/e35/p640x640/23594790_2021382584765447_525153820309716992_n.jpg"
+                <img class="card-img-top"    src="https://scontent-vie1-1.cdninstagram.com/vp/8084b0cdf8213d6501d873e2c87496cd/5BBB99AF/t51.2885-15/sh0.08/e35/p640x640/23594790_2021382584765447_525153820309716992_n.jpg"
                     alt="Card image cap">
 
                 <!-- Card content -->
@@ -200,4 +200,5 @@
 
 </section>
 <!-- Section: Social news card -->
+
 @endsection

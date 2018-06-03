@@ -1,13 +1,13 @@
 @extends('layouts.master') @section('tittle') Welcome @endsection @section('content')
 <div class="mask rgba-gradient d-flex justify-content-center align-items-center">
   <!-- Content -->
-  <div class="container content">
+  <div class="container content mb-lg-5">
     <!--Grid row-->
     <div class="row">
       <!--Grid column-->
       <div id="fadeleft" class="col-md-6 white-text text-center text-md-left mt-xl-5 mtb-5 wow fadeInLeft" data-wow-delay="0.3s">
         <blockquote class="blockquote d-none" id="alertas">
-            
+
         </blockquote>
         <div id="registro">
           <h1 class="h1-responsive font-weight-bold mt-sm-5">Registrate en nuestra web</h1>
@@ -18,13 +18,12 @@
               <div class="col-md-11 col-lg-6">
                 <div class="md-form">
                   <input type="text" id="name" name="name" class="form-control validate" required>
-                  <label for="name" >Nombre</label>
+                  <label for="name">Nombre</label>
                 </div>
               </div>
-
               <div class="col-md-11 col-lg-6">
                 <div class="md-form">
-                  <input type="email" id="email" name="email" class="form-control validate" required >
+                  <input type="email" id="email" name="email" class="form-control validate" required>
                   <label for="email">Email</label>
                 </div>
               </div>
@@ -34,7 +33,6 @@
                   <label for="password">Contraseña</label>
                 </div>
               </div>
-
               <div class="col-md-11 col-lg-6">
                 <div class="md-form">
                   <input type="password" id="password_confirmation" name="password_confirmation" class="form-control validate" required>
@@ -44,8 +42,9 @@
             </div>
             <div class="form-group row my-4 justify-content-center">
               <div class="col-md-12 col-lg-12 offset-lg-2 col-auto">
-                <button   class="btn btn-primary mr-lg-4 " id="btn-register">
-                  Register &nbsp; <i class="far fa-share-square" id="Iregistro"></i>
+                <button class="btn btn-primary mr-lg-4 " id="btn-register">
+                  Register &nbsp;
+                  <i class="far fa-share-square" id="Iregistro"></i>
                 </button>
                 <a class="black-text cambiar small">
                   ¿Ya tienes cuenta?
@@ -110,8 +109,6 @@
   <!-- Content -->
 </div>
 <!-- Mask & flexbox options-->
-
-
 <!-- Modal -->
 <div class="modal fade " id="forgotpassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md " role="document">
@@ -123,8 +120,8 @@
         </button>
       </div>
       <div class="modal-body text-center mb-1">
-        <p class="small">Podemos ayudarte a cambiar tu contraseña mediante tu nombre de usuario de Minimal o la dirección de correo electrónico
-          enlazada a la cuenta.
+        <p class="small">Podemos ayudarte a cambiar tu contraseña mediante tu dirección de correo electrónico
+          enlazada a la cuenta de Minimal.
         </p>
         <form method="POST" action="{{ route('password.email') }}">
           @csrf
@@ -156,7 +153,7 @@
         </p>
         <form method="POST" action="{{ route('password.request') }}">
           @csrf
-          <input type="hidden" name="token" value="" id="password_token"  >
+          <input type="hidden" name="token" value="" id="password_token">
           <div class="md-form ml-0 mr-0">
             <input type="email" id="reset" name="email" class=" form-control ml-0 modal-color">
             <label for="reset" class="ml-0 modal-color">Email</label>
@@ -179,8 +176,9 @@
   </div>
 </div>
 <script>
-    var token = '{{Session::token()}}';
-    var urlRegister = '{{route('register')}}';
-    var urlLike = '{{route('like')}}';
+  var token = '{{Session::token()}}';
+  var urlRegister = '{{route('register')}}';
+  var urlLogin = '{{route('login')}}';
+  var urlPassword = '{{route('password.request')}}';
 </script>
 @endsection
