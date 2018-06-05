@@ -4,7 +4,10 @@ new WOW().init();
 var postId = 0;
 var postBodyElement = null;
 var welcome = false;
-
+var val = true;
+var not = [];
+var notificaciones = "";
+var form = "";
 
 
 $('.edit').on('click', function (event) {
@@ -56,15 +59,19 @@ $('.like').on('click', function (event) {
 });
 
 function cambiar() {
+
   if (welcome) {
     welcome = false;
+    form = "register";
     $('#registro').toggleClass('d-none');
     $('#login').addClass('d-none');
   } else {
     welcome = true;
+    form = "login";
     $('#login').toggleClass('d-none');
     $('#registro').addClass('d-none');
   }
+  resetOnChangeWelcome();
 }
 
 $('.cambiar').on('click', cambiar);
@@ -127,18 +134,20 @@ $.ajaxSetup({
 
 $("#btn-register").click(function (e) {
   e.preventDefault();
-  resetNotificaciones();
+  resetWelcome();
+  notificaciones = "";
   var name = $("input[name=name]").val();
   var password = $("input[name=password]").val();
   var password_confirmation = $("input[name=password_confirmation]").val();
   var email = $("input[name=email]").val();
-  var validacion = validateParams(params = {
+  validateParams(params = {
     "name": name,
     "password": password,
     "password_confirmation": password_confirmation,
     "email": email
-  }, password_val = password);
-  if (validacion) {
+  }, form = "register");
+  if (val) {
+    $('#I' + form).addClass('fas fa-spinner fa-spin');
     $.ajax({
       type: 'POST',
       url: urlRegister,
@@ -151,25 +160,24 @@ $("#btn-register").click(function (e) {
       success: function (data, textStatus) {
         if (data.error) {
           $('#alertas').addClass('bq-warning').removeClass('d-none');
-          $('#Iregistro').addClass('fas fa-times red-text').removeClass('fa-spin');
-          $('#alertas').html("<p class='bq-title' style='font-size:1em'>Notificaciones</p>" + "<ul class='list-unstyled text-left'><li class='small'>No se ha podido crear el usuario, vuelva a intentarlo mas tarde.</li></ul>");
-          $('#register-form').closest('form').find("input").addClass('invalid');
+          $('#I' + form).addClass('fas fa-times red-text').removeClass('fa-spin');
+          $('#alertas').html("<p class='bq-title' style='font-size:1em'>Notificaciones</p>" + "<ul class='list-unstyled text-left'><li class='small'>" + data.error + "</li></ul>");
         } else if (data.errors) {
           $('#alertas').addClass('bq-warning').removeClass('d-none');
-          $('#Iregistro').addClass('fas fa-times red-text').removeClass('fa-spin');
+          $('#I' + form).addClass('fas fa-times red-text').removeClass('fa-spin');
           jQuery.each(data.errors, function (key1, value1) {
             jQuery.each(value1, function (key, value) {
               notificaciones += "<li class='small'>" + value + "</li>";
-              $('#register-form').closest('form').find("input[name=" + key1 + "]").addClass('invalid');
+              $('#' + form + '-form').closest('form').find("input[name=" + key1 + "]").addClass('invalid');
               if (key1 == "password")
-                $('#register-form').closest('form').find("input[name=password_confirmation]").addClass('invalid');
+              $('#' + form + '-form').closest('form').find("input[name=password_confirmation]").addClass('invalid');
             })
           });
           $('#alertas').html("<p class='bq-title' style='font-size:1em'>Notificaciones</p>" + "<ul class='list-unstyled text-left'>" + notificaciones + "</ul>");
         } else {
-          $('#Iregistro').addClass('fas fa-check green-text').removeClass('fa-spin');
-          $('#register-form').closest('form').find("input").val("").removeClass('valid invalid');
-          $('#register-form').closest('form').find("label").removeClass('active');
+          $('#I' + form).addClass('fas fa-check green-text').removeClass('fa-spin');
+          $('#' + form + '-form').closest('form').find("input").val("").removeClass('valid invalid');
+          $('#' + form + '-form').closest('form').find("label").removeClass('active');
           $('#alertas').addClass('bq-success').removeClass('d-none');
           $('#alertas').html("<p class='bq-title' style='font-size:1em'>Notificaciones</p>" + "<ul class='list-unstyled text-left'><li class='small'>Usuario creado correctamente, comprueba tu correo electronico para activar tu cuenta. (Puede estar en la bandeja de spam)</li></ul>");
         }
@@ -178,32 +186,130 @@ $("#btn-register").click(function (e) {
   }
 });
 
-function validar_email(email) {
-  var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  return regex.test(email) ? true : false;
+$("#btn-login").click(function (e) {
+  e.preventDefault();
+  resetWelcome();
+  notificaciones = "";
+  var identity = $("input[name=identity]").val();
+  var password = $("input[id=password_login]").val();
+  validateParams(params = {
+    "identity": identity,
+    "password": password,
+  }, form = "login");
+  if (val) {
+    $('#I' + form).addClass('fas fa-spinner fa-spin');
+    $.ajax({
+      type: 'POST',
+      url: urlLogin,
+      data: {
+        identity: identity,
+        password: password,
+      },
+      success: function (data, textStatus) {
+        if (data.error) {
+          $('#alertas').addClass('bq-warning').removeClass('d-none');
+          $('#I' + form).addClass('fas fa-times red-text').removeClass('fa-spin');
+          $('#alertas').html("<p class='bq-title' style='font-size:1em'>Notificaciones</p>" + "<ul class='list-unstyled text-left'><li class='small'>" + data.error + "</li></ul>");
+        } else if (data.errors) {
+          $('#alertas').addClass('bq-warning').removeClass('d-none');
+          $('#I' + form).addClass('fas fa-times red-text').removeClass('fa-spin');
+          jQuery.each(data.errors, function (key1, value1) {
+            jQuery.each(value1, function (key, value) {
+              notificaciones += "<li class='small'>" + value + "</li>";
+              $('#' + form + '-form').closest('form').find("input[name=" + key1 + "]").addClass('invalid');
+            })
+          });
+          $('#alertas').html("<p class='bq-title' style='font-size:1em'>Notificaciones</p>" + "<ul class='list-unstyled text-left'>" + notificaciones + "</ul>");
+        } else {
+          // $('#I' + form).addClass('fas fa-check green-text').removeClass('fa-spin');
+          // $('#' + form + '-form').closest('form').find("input").val("").removeClass('valid invalid');
+          // $('#' + form + '-form').closest('form').find("label").removeClass('active');
+          // $('#alertas').addClass('bq-success').removeClass('d-none');
+          // $('#alertas').html("<p class='bq-title' style='font-size:1em'>Notificaciones</p>" + "<ul class='list-unstyled text-left'><li class='small'>Usuario creado correctamente, comprueba tu correo electronico para activar tu cuenta. (Puede estar en la bandeja de spam)</li></ul>");
+          window.location = urlhome;
+        }
+      }
+    })
+  }
+});
+
+function validateParams(params) {
+  val = true;
+  not = [];
+  notificaciones = "";
+  validar_required(params);
+  validar_password(params.password, params.password_confirmation);
+  validar_email(params.email);
+  console.log(params);
+  if (!val) {
+    $('#alertas').addClass('bq-warning').removeClass('d-none');
+    $('#I' + form).removeClass('fa-spinner fa-spin far fa-share-square').addClass('fas fa-times red-text');
+    jQuery.each(not, function (key, value) {
+      notificaciones += "<li class='small'>" + value + "</li>";
+    });
+    $('#alertas').html("<p class='bq-title' style='font-size:1em'>Notificaciones</p>" + "<ul class='list-unstyled text-left'>" + notificaciones + "</ul>");
+  }
+  return val;
 }
 
-function resetNotificaciones() {
-  var notificaciones = "";
-  $('#Iregistro').removeClass('red-text');
-  $('#Iregistro').removeClass('green-text');
-  $('#Iregistro').addClass('fas fa-spinner fa-spin');
+function validar_email(email) {
+  var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  if (regex.test(email)) {
+    not.push("Email invalido");
+    val = false;
+    $('#' + form + '-form').closest('form').find("input[name=email]").addClass('invalid');
+  }
+}
+
+function validar_password(password, password_confirmation) {
+
+  if (form == "register" || form == "reset") {
+    if (password != password_confirmation) {
+      not.push("Las contraseñas no coinciden.");
+      val = false;
+      $('#' + form + '-form').closest('form').find("input[name=password]").addClass('invalid');
+      $('#' + form + '-form').closest('form').find("input[name=password_confirmation]").addClass('invalid');
+    }
+    if (password.length < 5 && password.length > 1) {
+      not.push("La contraseña debe contener minimo 5 caracteres.");
+      $('#' + form + '-form').closest('form').find("input[name=password]").addClass('invalid');
+      $('#' + form + '-form').closest('form').find("input[name=password_confirmation]").addClass('invalid');
+      val = false;
+    }
+  } else if (password.length < 5 && password.length > 1) {
+    not.push("La contraseña debe contener minimo 5 caracteres.");
+    $('#' + form + '-form').closest('form').find("input[name=password]").addClass('invalid');
+    val = false;
+  }
+
+
+}
+
+function validar_required(params) {
+  jQuery.each(params, function (key, value) {
+    if (value == "") {
+      val = false;
+      if (key != "identity")
+        not.push("El campo " + key + " es requerido.");
+      else
+        not.push("Debes introducir un email o nombre de usuario");
+      $('#' + form + '-form').closest('form').find("input[name=" + key + "]").addClass('invalid');
+    }
+  });
+}
+
+function resetWelcome() {
+  $('#I' + form).removeClass('red-text');
+  $('#I' + form).removeClass('green-text');
+  $('#I' + form).addClass('far fa-share-square');
   $('#alertas').addClass('d-none');
 }
 
-function validateParams(params, password_val) {
-  var val = true;
-  jQuery.each(params, function (key, value) {
-    if (value == "") {
-      console.log("El campo " + key + " es requerido.");
-      val = false;
-    }
-  });
-  if (password.length < 5) {
-    console.log("La contraseña debe contener minimo 5 caracteres.");
-    val = false;
-  }
-  if (validar_email(params.email) && val)
-    console.log("Todo ok");
-  // return true;
-} 
+function resetOnChangeWelcome() {
+  $('#I' + form).removeClass('red-text');
+  $('#I' + form).removeClass('green-text');
+  $('#I' + form).addClass('far fa-share-square');
+  $('#alertas').addClass('d-none');
+  $('#' + form + '-form').closest('form').find("input").removeClass('invalid valid').val("");
+  $('#' + form + '-form').closest('form').find("label").removeClass('active');
+}

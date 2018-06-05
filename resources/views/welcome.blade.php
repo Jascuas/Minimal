@@ -1,7 +1,7 @@
 @extends('layouts.master') @section('tittle') Welcome @endsection @section('content')
 <div class="mask rgba-gradient d-flex justify-content-center align-items-center">
   <!-- Content -->
-  <div class="container content mb-lg-5">
+  <div class="container content ">
     <!--Grid row-->
     <div class="row">
       <!--Grid column-->
@@ -44,7 +44,7 @@
               <div class="col-md-12 col-lg-12 offset-lg-2 col-auto">
                 <button class="btn btn-primary mr-lg-4 " id="btn-register">
                   Register &nbsp;
-                  <i class="far fa-share-square" id="Iregistro"></i>
+                  <i class="far fa-share-square" id="Iregister"></i>
                 </button>
                 <a class="black-text cambiar small">
                   ¿Ya tienes cuenta?
@@ -56,44 +56,40 @@
         <div id="login" class="d-none ">
           <h1 class="h1-responsive font-weight-bold mt-sm-5">Inicia sesión</h1>
           <hr class="hr-light">
-          <form method="POST" action="{{ route('login') }}">
+          <form method="POST"  id="login-form">
             @csrf
             <div class="row">
               <div class="col-md-11 col-lg-6">
                 <div class="md-form ">
-                  <input type="text" id="identity" name="identity" class="form-control" value="{{ old('username') ?: old('email') }}">
+                  <input type="text" id="identity" name="identity" class="form-control validate" value="{{ old('username') ?: old('email') }}">
                   <label for="identity">Email o Nombre de Usuario</label>
                 </div>
               </div>
               <div class="col-md-11 col-lg-6">
                 <div class="md-form">
-                  <input type="password" id="password_login" name="password" class="form-control">
+                  <input type="password" id="password_login" name="password" class="form-control validate">
                   <label for="password_login">Contraseña</label>
                 </div>
               </div>
             </div>
-            <div class=" row py-4 justify-content-start ">
-              <div class="col-5 col-xl-3 col-lg-4 col-md-5">
-                <button type="submit" class="btn btn-primary ">
-                  Login
+            <div class="form-group row py-4 justify-content-center ">
+              <div class="col-5 col-xl-5 col-lg-5 col-md-6 pr-0 ">
+                <button type="submit" class="btn btn-primary text-center" id="btn-login">
+                  Login &nbsp;
+                  <i class="far fa-share-square" id="Ilogin"></i>
                 </button>
               </div>
-              <div class="col-3 col-xl-2 col-lg-3 col-md-3 align-self-center">
+              <div class="col-3 col-xl-2 col-lg-2 col-md-2 text-center align-self-center px-0 ">
                 <a class="cambiar black-text small">
                   ¡Regístrate!
                 </a>
               </div>
-              <div class="col-4 col-xl-4 col-lg-5 col-md-4 align-self-center pr-0">
+              <div class="col-4 col-xl-4 col-lg-5 col-md-4 text-center align-self-center px-0 ">
                 <a class="black-text small" data-toggle="modal" data-target="#forgotpassword">
                   ¿Olvidaste la contraseña?
                 </a>
-                {{--
-                <a class="black-text small" href="{{ route('password.request') }}">
-                  ¿Olvidaste la contraseña?
-                </a> --}}
               </div>
             </div>
-            <input type="hidden" name="remember_token" value="{{Session::token()}}">
           </form>
         </div>
       </div>
@@ -176,9 +172,9 @@
   </div>
 </div>
 <script>
-  var token = '{{Session::token()}}';
   var urlRegister = '{{route('register')}}';
   var urlLogin = '{{route('login')}}';
   var urlPassword = '{{route('password.request')}}';
+  var urlhome = '{{route('home')}}';
 </script>
 @endsection

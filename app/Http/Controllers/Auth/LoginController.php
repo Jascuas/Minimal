@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Request; 
-use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Request;
+
 class LoginController extends Controller
 {
     /*
@@ -17,7 +17,7 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
+     */
 
     use AuthenticatesUsers;
 
@@ -37,84 +37,61 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
     /**
      * Check either username or email.
      * @return string
      */
-    public function rules()
-{
-    return [
-       'identity' => 'required',
-       'password' => 'required'
-    ];
-}
-    public function login(Request $request)
-{
-    $field = filter_var($request->identity, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-    $request->merge([$field => $request->identity]);
-
-
-    if (auth()->attempt($request->only($field, 'password')))
+    public function login1(Request $request)
     {
-        return redirect('/');
+        $field = filter_var($request->identity, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $request->merge([$field => $request->identity]);
+        $data = $request->only($field, 'password');
+        $data = data_set($data, 'status', 1);
+        @info($data);
+        if (auth()->attempt($data)) {
+            @info(auth()->attempt($data));
+            return redirect('/home');
+        }
+        return redirect('login')->withErrors([
+            'error' => 'These credentials do not match our records.',
+        ]);
     }
+    protected function login(Request $request)
+    {
+        header('Content-Type: application/json');
+        $rules = [
+            'identity' => 'required',
+            'password' => 'required',
+        ];
+        $messages = [
+            'identity.required' => 'Debes introducir un email o nombre de usuario.',
+            'password.required' => 'La contraseña es requerida.',
+        ];
+        $validatedData = \Validator::make($request->all(), $rules, $messages);
 
+        if ($validatedData->fails()) {
+            return response()->json(['errors' => $validatedData->errors()]);
+        }
 
-    return redirect('login')->withErrors([
-        'error' => 'These credentials do not match our records.',
-    ]);
-}
-    // public function username()
-    // {
-    //     $identity  = request()->get('identity');
-    //     $fieldName = filter_var($identity, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-    //     request()->merge([$fieldName => $identity]);
-    //     return $fieldName;
-    // }
-    // protected function credentials(Request $request)
-    // {
-    //     $field = filter_var($request->get($this->username()), FILTER_VALIDATE_EMAIL)
-    //         ? $this->username()
-    //         : 'username';
-    //         @info($field);
-    //     return [
-    //         $field => $request->get($this->username()),
-    //         'password' => $request->password,
-    //     ];
-    // }   
+        try {
+            $field = filter_var($request->identity, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+            $request->merge([$field => $request->identity]);
+            $data = $request->only($field, 'password');
+            $data = data_set($data, 'status', 1);
+            if (!auth()->attempt($data)) {
+                return response()->json(['error' => 'No coinciden las credenciales con ningun usuario de nuestra web, lo sentimos.']);
+            }
 
-
+        } catch (\Exception $exception) {
+            logger()->error($exception);
+            $code = $exception->getCode();
+            return response()->json(['error' => 'Hemos tenido un problema con nuestro servidor, vuelva a intentarlo mas tarde.']);
+        }
+    }
     /**
      * Validate the user login.
      * @param Request $request
      */
-    // protected function validateLogin(Request $request)
-    // {
-    //     $this->validate(
-    //         $request,
-    //         [
-    //             'identity' => 'required|string',
-    //             'password_login' => 'required|string',
-    //         ],
-    //         [
-    //             'identity.required' => 'Username or email is required',
-    //             'password.required' => 'Password is required',
-    //         ]
-    //     );
-    // }
-    // /**
-    //  * @param Request $request
-    //  * @throws ValidationException
-    //  */
-    // protected function sendFailedLoginResponse(Request $request)
-    // {
-    //     $request->session()->put('login_error', trans('auth.failed'));
-    //     throw ValidationException::withMessages(
-    //         [
-    //             'error' => [trans('auth.failed')],
-    //         ]
-    //     );
-    // }
-   
+
 }
