@@ -6,7 +6,6 @@ use App\Notifications\UserRegisteredSuccessfully;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class RegisterController extends Controller
@@ -81,31 +80,6 @@ class RegisterController extends Controller
         }
         return response()->json(['success']);
     }
-    // protected function register1(Request $request)
-    // {
-    //     /** @var User $user */
-    // @info($request);
-    // @info($_POST);
-    // exit();
-    //     $validatedData = $request->validate([
-    //         'name'     => 'required|string|max:255',
-    //         'email'    => 'required|string|email|max:255|unique:users',
-    //         'password' => 'required|string|min:6|confirmed',
-    //     ]);
-    //     try {
-    //         $validatedData['password']        = bcrypt(array_get($validatedData, 'password'));
-    //         $validatedData['activation_code'] = time();
-    //         $validatedData['username'] = $request->email;
-    //         $user                             = app(User::class)->create($validatedData);
-    //     } catch (\Exception $exception) {
-    //         logger()->error($exception);
-    //         return redirect()->back()->withErrors([
-    //             'error' => 'No se ha podido crear el usuario.',
-    //         ]);
-    //     }
-    //     $user->notify(new UserRegisteredSuccessfully($user));
-    //     return redirect()->back()->with('message', 'Usuario creado correctamente. Comprueba tu correo electronico para activar tu cuenta.(Puede estar en la bandeja de spam)');
-    // }
     /**
      * Activate the user with given activation code.
      * @param string $activationCode

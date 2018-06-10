@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
+use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -42,21 +44,6 @@ class LoginController extends Controller
      * Check either username or email.
      * @return string
      */
-    public function login1(Request $request)
-    {
-        $field = filter_var($request->identity, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        $request->merge([$field => $request->identity]);
-        $data = $request->only($field, 'password');
-        $data = data_set($data, 'status', 1);
-        @info($data);
-        if (auth()->attempt($data)) {
-            @info(auth()->attempt($data));
-            return redirect('/home');
-        }
-        return redirect('login')->withErrors([
-            'error' => 'These credentials do not match our records.',
-        ]);
-    }
     protected function login(Request $request)
     {
         header('Content-Type: application/json');
@@ -76,22 +63,21 @@ class LoginController extends Controller
 
         try {
             $field = filter_var($request->identity, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-            $request->merge([$field => $request->identity]);
-            $data = $request->only($field, 'password');
+            $data = $request->only('password');
+            $data = data_set($data, $field, $_POST['identity']);
             $data = data_set($data, 'status', 1);
-            if (!auth()->attempt($data)) {
-                return response()->json(['error' => 'No coinciden las credenciales con ningun usuario de nuestra web, lo sentimos.']);
+            $remember = true;
+            $user = User::where($field, $request->identity)->first();
+            if (!$user) {
+                return response()->json(['error' => 'El email o el usuario no coinciden con ningun usuario de nuestra web, lo sentimos.']);
+            } else if (!Auth::attempt($data, $remember)) {
+                return response()->json(['error' => 'No coincide la contraseña con el usuario de nuestra web, lo sentimos.']);
             }
-
         } catch (\Exception $exception) {
             logger()->error($exception);
             $code = $exception->getCode();
             return response()->json(['error' => 'Hemos tenido un problema con nuestro servidor, vuelva a intentarlo mas tarde.']);
         }
     }
-    /**
-     * Validate the user login.
-     * @param Request $request
-     */
 
 }

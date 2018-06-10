@@ -41,8 +41,6 @@ class UserRegisteredSuccessfully extends Notification
         /** @var User $user */
         $user = $this->user;
         return (new MailMessage)
-            // ->from(config('env.MAIL_FROM_ADDRESS'))
-            ->from('MinimalSuport@sandbox554557400c154fa6af521a151d280c8b.mailgun.org')
             ->subject('Cuenta creada correctamente!')
             ->greeting(sprintf('Hola %s', $user->name))
             ->line('Te has registrado correctamente en nuestra web. Por favor activa tu cuenta.')
