@@ -16,75 +16,84 @@ Route::post('/register', [
     'as' => 'register'
 ]);
 
-Auth::routes();
-
-Route::get('/welcome', function () {
-    return view('welcome')->with('welcome', '1');
-})->name('welcome');
-
-Route::get('/login', function () {
-    return redirect()->to('/welcome');
-})->name('login');
-
-Route::post('/like', [ 
-    'uses' => 'PostController@postLikePost',
-    'as' => 'like'
-]);
-
-Route::get('/', [
-    'uses' => 'HomeController@index',
-    'as' => 'home'
-]);
-
-Route::get('/home', [
-    'uses' => 'HomeController@index',
-    'as' => 'home'
-]);
-
-Route::get('/dashboard', [
-    'uses' => 'PostController@getDashboard',
-    'as' => 'dashboard'
-]);
-
 Route::get('/logout', [
     'uses' => 'UserController@getLogout',
     'as' => 'logout'
 ]);
 
+Route::get('/login', function () {
+    return redirect()->to('/welcome');
+})->name('login');
 
-Route::get('/account', [
-    'uses' => 'UserController@getAccount',
-    'as' => 'account'
-]);
+Auth::routes();
 
-Route::post('/updateaccount', [
-    'uses' => 'UserController@postSaveAccount',
-    'as' => 'account.save'
-]);
+Route::group(['middleware' => ['auth']], function () {
+    //only authorized users can access these routes
+    Route::post('/like', [ 
+        'uses' => 'PostController@postLikePost',
+        'as' => 'like'
+    ]);
+    
+    Route::get('/', [
+        'uses' => 'HomeController@index',
+        'as' => 'home'
+    ]);
+    
+    Route::get('/home', [
+        'uses' => 'HomeController@index',
+        'as' => 'home'
+    ]);
+    
+    Route::get('/dashboard', [
+        'uses' => 'PostController@getDashboard',
+        'as' => 'dashboard'
+    ]);
+    
+    Route::get('/account', [
+        'uses' => 'UserController@getAccount',
+        'as' => 'account'
+    ]);
+    
+    Route::post('/updateaccount', [
+        'uses' => 'UserController@postSaveAccount',
+        'as' => 'account.save'
+    ]);
+    
+    Route::get('/userimage/{filename}', [
+        'uses' => 'UserController@getUserImage',
+        'as' => 'account.image'
+    ]);
+    
+    Route::post('/createpost', [
+        'uses' => 'PostController@postCreatePost',
+        'as' => 'post.create'
+    ]);
+    
+    Route::get('/delete-post/{post_id}', [
+        'uses' => 'PostController@getDeletePost',
+        'as' => 'post.delete'
+    ]);
+    
+    Route::post('/edit', [ 
+        'uses' => 'PostController@postEditPost',
+        'as' => 'edit'
+    ]);
+    
+    Route::post('/like', [ 
+        'uses' => 'PostController@postLikePost',
+        'as' => 'like'
+    ]);
+    
+    $this->get('/verify-user/{code}', 'Auth\RegisterController@activateUser')->name('activate.user');
+});
 
-Route::get('/userimage/{filename}', [
-    'uses' => 'UserController@getUserImage',
-    'as' => 'account.image'
-]);
+Route::group(['middleware' => ['guest']], function () {
+    //only guests can access these routes
+    Route::get('/welcome', function () {
+        return view('welcome')->with('welcome', '1');
+    })->name('welcome');
+});
 
-Route::post('/createpost', [
-    'uses' => 'PostController@postCreatePost',
-    'as' => 'post.create'
-]);
 
-Route::get('/delete-post/{post_id}', [
-    'uses' => 'PostController@getDeletePost',
-    'as' => 'post.delete'
-]);
 
-Route::post('/edit', [ 
-    'uses' => 'PostController@postEditPost',
-    'as' => 'edit'
-]);
 
-Route::post('/like', [ 
-    'uses' => 'PostController@postLikePost',
-    'as' => 'like'
-]);
-
-$this->get('/verify-user/{code}', 'Auth\RegisterController@activateUser')->name('activate.user');

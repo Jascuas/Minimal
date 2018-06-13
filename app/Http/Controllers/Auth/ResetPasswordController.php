@@ -33,9 +33,8 @@ class ResetPasswordController extends Controller
         }
 
         try {
-            $response = $this->broker()->reset(
-                $this->credentials($request), function ($user, $password) {
-                    $this->resetPassword($user, $password);
+            $response = $this->broker()->reset($this->credentials($request), function ($user, $password) {
+                $this->resetPassword($user, $password);
                 }
             );
             

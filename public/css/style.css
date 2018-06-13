@@ -33,3 +33,40 @@ input:-webkit-autofill {
  animation-fill-mode: both;
 }
 
+.form-check-input[type=checkbox], .form-check-input[type=radio], label.btn input[type=checkbox], label.btn input[type=radio] {
+  position: absolute;
+  left: -9999px;
+  visibility: hidden;
+}
+.navbar .breadcrumb .breadcrumb-item.active, .navbar .breadcrumb .breadcrumb-item:before {
+  color: rgba(0, 0, 0, 0.65);
+}
+@media (min-width: 576px){
+  .jumbotron {
+      padding: 1rem 2rem;
+  }
+  }
+  .jumbotron {
+      margin-bottom: 0rem;
+  }
+
+ /* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) { 
+
+
+ }
+
+ /* Medium devices (tablets, 768px and up) */
+@media (max-width: 768px) { 
+  
+ }
+
+ /* Large devices (desktops, 992px and up) */
+@media (max-width: 992px) { 
+  
+ }
+
+ /* Extra large devices (large desktops, 1200px and up) */
+@media (max-width: 1200px) { 
+
+}

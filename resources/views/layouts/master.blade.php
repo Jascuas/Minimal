@@ -32,7 +32,9 @@
       background: -webkit-linear-gradient(45deg, rgba(213, 15, 61, 0.6), rgba(13, 17, 198, 0.69) 100%);
       background: linear-gradient(to 45deg, rgba(213, 15, 61, 0.6), rgba(13, 17, 198, 0.69) 100%);
     }
-    
+    .medio {
+      margin-top: 50px;
+    }
     .linea {
       width: 0;
       border-top: 1px solid #fff;
@@ -53,9 +55,12 @@
 
 <body>
   @include('includes.header')
-  <div class="container py-3 pb-5 mb-5">
+  <div class="container my-5 py-3 medio">
     @yield('content')
   </div>
+  @if(Auth::check() && !isset($welcome))
+  @include('includes.notifications')
+  @endif
   @include('includes.footer')
 
   <!-- JQuery -->
@@ -63,12 +68,13 @@
   <!-- Bootstrap tooltips -->
   <script type="text/javascript" src="{{ URL::to('js/popper.min.js') }}"></script>
   <!-- Bootstrap core JavaScript -->
-
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
     crossorigin="anonymous"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.2/js/mdb.min.js"></script>
   {{-- <script type="text/javascript" src="{{ URL::to('js/mdb.min.js') }}"></script> --}}
+  <!-- Link directly to Masonry files-->
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
   <!-- App core JavaScript -->
   <script type="text/javascript" src="{{ URL::to('js/prueba.js') }}"></script>
 

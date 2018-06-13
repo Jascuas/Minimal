@@ -91,7 +91,6 @@ $.urlParam = function (name) {
 if ($.urlParam('modal_password')) {
   $('#reset-modal').modal('show');
   $('#password_token').val($.urlParam('token'));
-  console.log($.urlParam('token'));
   $('#resetemail').val($.urlParam('email'));
   $('#text-reset').text("Escriba la nueva contraseña para la cuenta con email: " + $.urlParam('email'));
 }
@@ -182,12 +181,14 @@ $("#btn-register").click(function (e) {
   var name = $("input[name=name]").val();
   var password = $("input[name=password]").val();
   var password_confirmation = $("input[name=password_confirmation]").val();
+  var username = $("input[name=username]").val();
   var email = $("input[name=email]").val();
   validateParams(params = {
     "name": name,
     "password": password,
     "password_confirmation": password_confirmation,
-    "email": email
+    "email": email,
+    "username": username
   });
   if (val) {
     $('#I' + form).addClass('fas fa-spinner fa-spin');
@@ -355,16 +356,20 @@ function validar_required(params) {
 }
 
 function resetWelcome() {
-  $('#I' + form).removeClass('red-text green-text').addClass('far fa-share-square');
-  $('#alertas').addClass('d-none');
-  $('#alertas').addClass('d-none');
+  $('#I' + form).removeClass('red-text green-text fas fa-spinner fa-spin').addClass('far fa-share-square');
+  $('#alertas').addClass('d-none').removeClass('bq-warning bq-success');
   $('#' + form + '-alert').addClass('d-none');
   $('#' + form + '-form').closest('form').find("input").removeClass('invalid');
 }
 
 function resetOnChangeWelcome() {
   $('#I' + form).removeClass('red-text green-text').addClass('far fa-share-square');
-  $('#alertas').addClass('d-none');
+  $('#alertas').addClass('d-none').removeClass('bq-warning bq-success');
   $('#' + form + '-form').closest('form').find("input").removeClass('invalid valid').val("");
   $('#' + form + '-form').closest('form').find("label").removeClass('active');
 }
+
+
+$( window ).on( "load", function() { $('.profile').masonry({
+  itemSelector : '.images-profile'
+})});

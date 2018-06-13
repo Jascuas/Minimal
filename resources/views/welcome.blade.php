@@ -5,7 +5,7 @@
     <!--Grid row-->
     <div class="row">
       <!--Grid column-->
-      <div id="fadeleft" class="col-md-6 white-text text-center text-md-left mt-xl-5 mtb-5 wow fadeInLeft" data-wow-delay="0.3s">
+      <div id="fadeleft" class="col-md-6 white-text text-center text-md-left mt-2  wow fadeInLeft" data-wow-delay="0.3s">
         <blockquote class="blockquote d-none" id="alertas"></blockquote>
         <div id="registro">
           <h1 class="h1-responsive font-weight-bold mt-sm-5">Registrate en nuestra web</h1>
@@ -20,6 +20,12 @@
                 </div>
               </div>
               <div class="col-md-11 col-lg-6">
+                <div class="md-form">
+                  <input type="text" id="username" name="username" class="form-control validate" required>
+                  <label for="username">Nombre de Usuario</label>
+                </div>
+              </div>
+              <div class="col-md-11 col-lg-12">
                 <div class="md-form">
                   <input type="email" id="email" name="email" class="form-control validate" required>
                   <label for="email">Email</label>
@@ -93,7 +99,7 @@
       </div>
       <!--Grid column-->
       <!--Grid column-->
-      <div id="faderight" class="col-md-6 col-xl-5 mt-xl-5 wow fadeInLeft d-none d-md-block" data-wow-delay="0.5s">
+      <div id="faderight" class="col-md-6 col-xl-5 mt-xl-5 wow fadeInLeft d-none d-md-block mt-md-5" data-wow-delay="0.5s">
         <img src="https://mdbootstrap.com/img/Mockups/Transparent/Small/admin-new.png" alt="" class="img-fluid">
       </div>
       <!--Grid column-->

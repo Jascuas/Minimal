@@ -12,12 +12,6 @@ class RegisterController extends Controller
 {
     use RegistersUsers;
     /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-    /**
      * Create a new controller instance.
      *
      */
@@ -33,39 +27,23 @@ class RegisterController extends Controller
      */
     protected function register(Request $request)
     {
-        header('Content-Type: application/json');
-        $rules = [
-            'name' => 'required|string|max:50',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-            'password_confirmation' => 'required',
-        ];
-        $messages = [
-            'name.required' => 'El nombre es requerido.',
-            'name.max' => 'El nombre no puede superar 50 caracteres.',
-            'name.string' => 'El nombre no puede contener caracteres especiales.',
-            'email.required' => 'El email es requerido.',
-            'email.max' => 'El email no puede superar 50 caracteres.',
-            'email.email' => 'El email no tiene un formato valido.',
-            'email.unique' => 'El email ya esta siendo usado en nuestra base de datos.',
-            'password.required' => 'La contraseña es requerida.',
-            'password.min' => 'La contraseña no puede ser menor de 6 caracteres.',
-            'password_confirmation.required' => 'Confirmar la  contraseña es requerido.',
-            'confirmed' => 'Las contraseñas no coinciden.',
-        ];
-        $validatedData = \Validator::make($request->all(), $rules, $messages);
+        $validatedData = \Validator::make($request->all(), $this->rules(), $this->messages());
 
         if ($validatedData->fails()) {
             return response()->json(['errors' => $validatedData->errors()]);
         }
 
         try {
+            
             $Datos = $_POST;
-            $Datos['password'] = bcrypt($Datos['password']);
-            $Datos['activation_code'] = Str::random(20);
-            $Datos['username'] = $Datos['email'];
-            $user = app(User::class)->create($Datos);
-            $user->notify(new UserRegisteredSuccessfully($user));
+            $user = User::where('email', $Datos['email'])->first();
+            if(!$user){
+                $Datos['password'] = bcrypt($Datos['password']);
+                $Datos['activation_code'] = Str::random(20);
+                $Datos['username'] = $Datos['username'];
+                $user = app(User::class)->create($Datos);
+                $user->notify(new UserRegisteredSuccessfully($user));
+            }  
 
         } catch (\Exception $exception) {
             logger()->error($exception);
@@ -101,5 +79,36 @@ class RegisterController extends Controller
             return "Whoops! something went wrong.";
         }
         return redirect()->to('/home');
+    }
+
+    protected function rules()
+    {
+        return [
+            'name' => 'required|string|max:50',
+            'username' => 'required|string|max:50|unique:users',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required',
+        ];
+    }
+    protected function messages()
+    {
+        return [
+            'name.required' => 'El nombre es requerido.',
+            'name.max' => 'El nombre no puede superar 50 caracteres.',
+            'name.string' => 'El nombre no puede contener caracteres especiales.',
+            'username.required' => 'El nombre de usuario es requerido.',
+            'username.max' => 'El nombre de usuario no puede superar 50 caracteres.',
+            'username.string' => 'El nombre de usuario no puede contener caracteres especiales.',
+            'username.unique' => 'El nombre de usuario ya esta siendo usado en nuestra base de datos.',
+            'email.required' => 'El email es requerido.',
+            'email.max' => 'El email no puede superar 50 caracteres.',
+            'email.email' => 'El email no tiene un formato valido.',
+            'email.unique' => 'El email ya esta siendo usado en nuestra base de datos.',
+            'password.required' => 'La contraseña es requerida.',
+            'password.min' => 'La contraseña no puede ser menor de 6 caracteres.',
+            'password_confirmation.required' => 'Confirmar la  contraseña es requerido.',
+            'confirmed' => 'Las contraseñas no coinciden.',
+        ];
     }
 }
