@@ -36,6 +36,7 @@ require __DIR__.'/../vendor/autoload.php';
 */
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
+// set the public path to this directory
 
 /*
 |--------------------------------------------------------------------------
@@ -58,3 +59,4 @@ $response = $kernel->handle(
 $response->send();
 
 $kernel->terminate($request, $response);
+

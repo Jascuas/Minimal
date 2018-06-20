@@ -1,4 +1,4 @@
-@extends('layouts.master') @section('tittle') Dashboard @endsection @section('content')
+@extends('layouts.master') @section('tittle') Subir imagenes @endsection @section('content')
 <section class="row new-post mb-5">
     <div class="col-md-12 col-md-offset-12 mx-auto">
         <header>

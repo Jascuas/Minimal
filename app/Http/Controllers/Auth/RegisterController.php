@@ -34,7 +34,7 @@ class RegisterController extends Controller
         }
 
         try {
-            
+
             $Datos = $_POST;
             $user = User::where('email', $Datos['email'])->first();
             if(!$user){
@@ -85,8 +85,8 @@ class RegisterController extends Controller
     {
         return [
             'name' => 'required|string|max:50',
-            'username' => 'required|string|max:50|unique:users',
-            'email' => 'required|email|max:255|unique:users',
+            'username' => 'required|string|max:10|unique:users',
+            'email' => 'required|email|max:50|unique:users',
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required',
         ];
@@ -98,7 +98,7 @@ class RegisterController extends Controller
             'name.max' => 'El nombre no puede superar 50 caracteres.',
             'name.string' => 'El nombre no puede contener caracteres especiales.',
             'username.required' => 'El nombre de usuario es requerido.',
-            'username.max' => 'El nombre de usuario no puede superar 50 caracteres.',
+            'username.max' => 'El nombre de usuario no puede superar 10 caracteres.',
             'username.string' => 'El nombre de usuario no puede contener caracteres especiales.',
             'username.unique' => 'El nombre de usuario ya esta siendo usado en nuestra base de datos.',
             'email.required' => 'El email es requerido.',

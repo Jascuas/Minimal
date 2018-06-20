@@ -5,7 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-
+use Illuminate \ Database \ Eloquent \ ModelNotFoundException;
 class Handler extends ExceptionHandler
 {
     /**
@@ -41,17 +41,37 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * Render an exception into an HTTP response.
+     * Render an exception into a response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
+     * @param  \Exception  $e
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Exception $e)
     {
-        return parent::render($request, $exception);
-    }
+        @info($e);
+        if ($e instanceof ModelNotFoundException or $e instanceof NotFoundHttpException) {
+            return response()->view('errors.404', [], 404);
+        }
+        if ($e instanceof HttpResponseException) {
+            return $e->getResponse();
+        } elseif ($e instanceof ModelNotFoundException or $e instanceof NotFoundHttpException) {
+            return response()->view('errors.missing', [], 404);
+        } elseif ($e instanceof AuthenticationException) {
+            return $this->unauthenticated($request, $e);
+        } elseif ($e instanceof AuthorizationException) {
+            $e = new HttpException(403, $e->getMessage());
+        } elseif ($e instanceof ValidationException && $e->getResponse()) {
+            return $e->getResponse();
+        }
 
+        if ($this->isHttpException($e)) {
+            return $this->toIlluminateResponse($this->renderHttpException($e), $e);
+        } else {
+            return $this->toIlluminateResponse($this->convertExceptionToResponse($e), $e);
+        }
+        return parent::render($request, $e);
+    }
     /**
      * Convert an authentication exception into an unauthenticated response.
      *
@@ -67,4 +87,5 @@ class Handler extends ExceptionHandler
 
         return redirect()->guest('/welcome');
     }
+    
 }

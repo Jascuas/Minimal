@@ -1,7 +1,6 @@
 <?php
 
 namespace App;
-
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\ResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -41,4 +40,22 @@ class User extends Authenticatable
 {
     $this->notify(new Notifications\MailResetPasswordNotification($token));
 }
+/**
+ * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+ */
+public function followers()
+{
+    return $this->belongsToMany(User::class, 'followers', 'leader_id', 'follower_id')->withTimestamps();
 }
+
+/**
+ * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+ */
+public function followings()
+{
+    return $this->belongsToMany(User::class, 'followers', 'follower_id', 'leader_id')->withTimestamps();
+}
+
+}
+
+

@@ -7,20 +7,21 @@ use App\Like;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-class PostController extends Controller
+class ExploraController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
     }
-    public function getUpload()
+    public function getExplora()
     {
         $user = Auth::user();
+        $posts = Post::all();
         $avatar = "/storage/usuarios/default_avatar.gif";
         if (!is_null($user->avatar)) {
             $avatar = "/storage/usuarios/" . $user->id . "/" . $user->avatar;
         }
-        return view('upload',compact('avatar', 'user'));
+        return view('explora',compact('post', 'avatar'));
     }
 
     public function postCreatePost(Request $request){

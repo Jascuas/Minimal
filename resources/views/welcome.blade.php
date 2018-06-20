@@ -182,6 +182,5 @@
   var urlhome = '{{route('home')}}';
   var urlForgot = '{{route('password.email')}}';
   var urlReset = '{{route('password.request')}}';
-
 </script>
 @endsection

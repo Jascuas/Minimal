@@ -41,18 +41,121 @@ input:-webkit-autofill {
 .navbar .breadcrumb .breadcrumb-item.active, .navbar .breadcrumb .breadcrumb-item:before {
   color: rgba(0, 0, 0, 0.65);
 }
+
+.jumbotron {
+  margin-bottom: 0rem;
+}
+
+.profile > [class*="col-"]{
+  padding-left: 10px !important;
+  padding-right:  10px !important;
+}
+
+body:not(.modal-open){
+  padding-right: 0px !important;
+}
+
+.cropit-preview {
+  background-color: #f8f8f8;
+  background-size: cover;
+  border: 1px solid #ccc;
+  margin-top: 7px;
+  width: 250px;
+  height: 250px;
+}
+
+.cropit-preview-image-container {
+  cursor: move;
+}
+.image-size-label {
+  margin-top: 10px;
+}
+
+#result {
+  margin-top: 10px;
+  width: 900px;
+  
+}
+#result-data {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+}
+.slider {
+  -webkit-appearance: none;
+  width: 240px;
+  height: 10px;
+  border-radius: 5px;   
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%; 
+  background: rgb(71, 141, 206);
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: rgb(71, 141, 206);
+  cursor: pointer;
+}
+
+.cropit-image-preview .error-msg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 20px;
+  color: #fff;
+  background: rgba(210,65,72,0.8);
+  line-height: 1.5;
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  -webkit-transition: opacity 0.25s;
+  -moz-transition: opacity 0.25s;
+  -o-transition: opacity 0.25s;
+  -ms-transition: opacity 0.25s;
+  transition: opacity 0.25s;
+}
+
+.cropit-image-preview.has-error .error-msg {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
+
 @media (min-width: 576px){
   .jumbotron {
       padding: 1rem 2rem;
   }
-  }
-  .jumbotron {
-      margin-bottom: 0rem;
-  }
+
+}
+
 
  /* Small devices (landscape phones, 576px and up) */
 @media (max-width: 576px) { 
-
+  .profile{
+    margin-left: 0.5px !important;
+    margin-right: 0.5px !important;
+  }
+  .profile > [class*="col-"]{
+    padding-left: 5px !important;
+    padding-right:  5px !important;
+  }
 
  }
 

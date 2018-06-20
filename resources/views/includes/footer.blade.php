@@ -1,9 +1,9 @@
 <!--Footer-->
 
-<footer class="pt-4 mt-5 font-small @if(isset($welcome)) page-footer @endif" style="border-top: 1px solid rgba(0, 0, 0, .1);">
-    
+<footer class="font-small @if(isset($welcome)) page-footer @endif" >
+    <hr class=" m-0 p-0">
     <!--Footer Links-->
-    <div class="container  mb-2 text-center text-md-center">
+    <div class="container  mb-2 text-center text-md-center pt-4 " >
 
         <div class="row">
             <!--First column-->
